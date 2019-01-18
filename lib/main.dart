@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'adddata.dart';
 import 'detail.dart';
 
 void main() {
@@ -22,14 +23,28 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Future<List> getData() async {
     final response = await http.get(
-        "http://192.168.1.107/my_store/getdata.php"); // your getdata file url here
+        "http://172.20.10.3/my_store/getdata.php"); // your getdata file url here
     return json.decode(response.body);
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.deepOrangeAccent,
+      backgroundColor: Colors.redAccent,
+      floatingActionButton: new FloatingActionButton(
+        child: new Icon(
+          Icons.add,
+          size: 35.0,
+        ),
+        backgroundColor: Colors.greenAccent,
+        foregroundColor: Colors.brown,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16.0))),
+        elevation: 8.0,
+        onPressed: () => Navigator.of(context).push(new MaterialPageRoute(
+              builder: (BuildContext context) => new AddData(),
+            )),
+      ),
       appBar: new AppBar(
         title: new Text(
           "MY STORE",
