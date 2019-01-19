@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import './editdata.dart';
+import './main.dart';
 
 class Detail extends StatefulWidget {
   List list;
@@ -11,17 +13,55 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
+// delete start
+
+  void deleteData() {
+    var url = "http://192.168.43.117/my_store/deleteData.php";
+    http.post(url, body: {'id': widget.list[widget.index]['id']});
+  }
+
+  void confirm() {
+    AlertDialog alertDialog = new AlertDialog(
+      content: new Text(
+          "Are You sure want to delete '${widget.list[widget.index]['item_name']}'"),
+      actions: <Widget>[
+        new RaisedButton(
+          child: new Text(
+            "OK DELETE!",
+            style: new TextStyle(color: Colors.black),
+          ),
+          color: Colors.red,
+          onPressed: () {
+            deleteData();
+            Navigator.of(context).push(new MaterialPageRoute(
+              builder: (BuildContext context) => new Home(),
+            ));
+          },
+        ),
+        new RaisedButton(
+          child: new Text("CANCEL", style: new TextStyle(color: Colors.black)),
+          color: Colors.green,
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
+    );
+
+    showDialog(context: context, child: alertDialog);
+  }
+
+  // delete finish
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       backgroundColor: Colors.orangeAccent,
       appBar: new AppBar(
-          backgroundColor: Colors.orangeAccent,
+          backgroundColor: Colors.red,
           title: new Text(
             "${widget.list[widget.index]['item_name']}", // column name in the table
             style: TextStyle(
               fontSize: 18.0,
-              color: Colors.red,
+              color: Colors.white,
             ),
           )),
       body: new Container(
@@ -57,7 +97,8 @@ class _DetailState extends State<Detail> {
                   padding: const EdgeInsets.only(top: 20.0),
                 ),
                 new Row(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     new RaisedButton(
                       child: new Text("EDIT"),
@@ -69,6 +110,11 @@ class _DetailState extends State<Detail> {
                                   index: widget.index,
                                 ),
                           )),
+                    ),
+                    new RaisedButton(
+                      child: new Text("DELETE"),
+                      color: Colors.red,
+                      onPressed: () => confirm(),
                     ),
                   ],
                 )
