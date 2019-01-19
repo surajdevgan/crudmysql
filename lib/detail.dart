@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import './editdata.dart';
+
 class Detail extends StatefulWidget {
   List list;
   int index;
@@ -23,7 +25,7 @@ class _DetailState extends State<Detail> {
             ),
           )),
       body: new Container(
-        height: 220.0,
+        height: 250.0,
         padding: const EdgeInsets.all(20.0),
         child: new Card(
           elevation: 8.0,
@@ -54,6 +56,22 @@ class _DetailState extends State<Detail> {
                 new Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                 ),
+                new Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    new RaisedButton(
+                      child: new Text("EDIT"),
+                      color: Colors.green,
+                      onPressed: () =>
+                          Navigator.of(context).push(new MaterialPageRoute(
+                            builder: (BuildContext context) => new EditData(
+                                  list: widget.list,
+                                  index: widget.index,
+                                ),
+                          )),
+                    ),
+                  ],
+                )
               ],
             ),
           ),

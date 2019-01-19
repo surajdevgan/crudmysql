@@ -13,7 +13,7 @@ class _AddDataState extends State<AddData> {
   TextEditingController controllerStock = new TextEditingController();
 
   void addData() {
-    var url = "http://172.20.10.3/my_store/adddata.php";
+    var url = "http://192.168.43.117/my_store/adddata.php";
 
     http.post(url, body: {
       "itemcode": controllerCode.text,

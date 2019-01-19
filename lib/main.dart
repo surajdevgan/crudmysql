@@ -23,7 +23,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Future<List> getData() async {
     final response = await http.get(
-        "http://172.20.10.3/my_store/getdata.php"); // your getdata file url here
+        "http://192.168.43.117/my_store/getdata.php"); // your getdata file url here
     return json.decode(response.body);
   }
 
